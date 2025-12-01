@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7p7ft3uhdk1t"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_rg5jv"]
+[ext_resource type="Texture2D" uid="uid://bjo8eb0pvlvh1" path="res://assets/radargrid_final.png" id="1_xa4wv"]
+[ext_resource type="Texture2D" uid="uid://7dac0iwii7t" path="res://assets/oceangrid_final.png" id="2_s7wc5"]
+[ext_resource type="TileSet" uid="uid://u8wqya5ywu14" path="res://assets/GameTilesTileSet.tres" id="4_j4cnc"]
+
+[node name="Player" type="Control" node_paths=PackedStringArray("radar_grid", "ocean_grid")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rg5jv")
+radar_grid = NodePath("RadarTexture/RadarTiles")
+ocean_grid = NodePath("OceanTexture/OceanTiles")
+metadata/_edit_lock_ = true
+
+[node name="RadarTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_xa4wv")
+metadata/_edit_lock_ = true
+
+[node name="RadarTiles" type="TileMap" parent="RadarTexture"]
+position = Vector2(2, 0)
+scale = Vector2(1.625, 1.625)
+tile_set = ExtResource("4_j4cnc")
+format = 2
+layer_1/name = "tokens"
+layer_1/tile_data = PackedInt32Array()
+metadata/_edit_lock_ = true
+
+[node name="OceanTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = -0.018
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.296
+offset_bottom = 0.252014
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_s7wc5")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="OceanTiles" type="TileMap" parent="OceanTexture"]
+position = Vector2(2, 0)
+scale = Vector2(1.63, 1.63)
+tile_set = ExtResource("4_j4cnc")
+format = 2
+layer_0/name = "ships"
+layer_1/name = "tokens"
+layer_1/tile_data = PackedInt32Array()
+metadata/_edit_lock_ = true

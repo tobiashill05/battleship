@@ -1,0 +1,274 @@
+[gd_scene load_steps=14 format=3 uid="uid://bci0fkk2sypoe"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_4t1cm"]
+[ext_resource type="FontFile" uid="uid://c1qn3mj1w48vm" path="res://assets/militar_font.ttf" id="2_iqjdy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bo57l"]
+
+[sub_resource type="Theme" id="Theme_on6p2"]
+default_font = ExtResource("2_iqjdy")
+default_font_size = 49
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(1, 1, 1, 1)
+Label/colors/font_shadow_color = Color(0.486275, 0.486275, 0.486275, 0)
+Label/styles/normal = SubResource("StyleBoxEmpty_bo57l")
+
+[sub_resource type="Animation" id="Animation_iwpve"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.176471, 0.117647, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7fvws"]
+resource_name = "damage_animation"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.15932, 0.15932),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.176471, 0.117647, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6xahy"]
+resource_name = "water_animation"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.137255, 0.631373, 0.623529, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qurk7"]
+_data = {
+"RESET": SubResource("Animation_iwpve"),
+"damage_animation": SubResource("Animation_7fvws"),
+"water_animation": SubResource("Animation_6xahy")
+}
+
+[sub_resource type="Theme" id="Theme_cyysj"]
+default_font = ExtResource("2_iqjdy")
+default_font_size = 30
+Button/fonts/font = ExtResource("2_iqjdy")
+
+[sub_resource type="Animation" id="Animation_4emcb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fca7u"]
+resource_name = "next_turn_animation"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(4.92458, 2.54912),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_a2uw0"]
+resource_name = "stopped"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s6tya"]
+_data = {
+"RESET": SubResource("Animation_4emcb"),
+"next_turn_animation": SubResource("Animation_fca7u"),
+"stopped": SubResource("Animation_a2uw0")
+}
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4t1cm")
+metadata/_edit_use_anchors_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.007
+anchor_bottom = 0.123
+offset_right = -8.06409
+offset_bottom = 0.295998
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="ReferenceRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ReferenceRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.5
+offset_top = -32.5
+offset_right = 271.5
+offset_bottom = 32.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_on6p2")
+text = "PLAYER ONE: Get ready!"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="DamageRect" type="ColorRect" parent="ReferenceRect2"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.176471, 0.117647, 1)
+
+[node name="DamageAnimation" type="AnimationPlayer" parent="ReferenceRect2/DamageRect"]
+libraries = {
+"": SubResource("AnimationLibrary_qurk7")
+}
+
+[node name="ButtonRect" type="ColorRect" parent="ReferenceRect2"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0941176, 0.168627, 0.176471, 1)
+
+[node name="Button" type="Button" parent="ReferenceRect2/ButtonRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -183.0
+offset_top = -76.0
+offset_right = 183.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_cyysj")
+action_mode = 0
+text = "NEXT TURN"
+
+[node name="ButtonAnimation" type="AnimationPlayer" parent="ReferenceRect2/ButtonRect"]
+libraries = {
+"": SubResource("AnimationLibrary_s6tya")
+}
+
+[connection signal="pressed" from="ReferenceRect2/ButtonRect/Button" to="." method="_on_button_pressed"]

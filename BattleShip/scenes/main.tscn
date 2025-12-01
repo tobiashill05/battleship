@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://xhclokgqktwc"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_kim6n"]
+[ext_resource type="PackedScene" uid="uid://b7p7ft3uhdk1t" path="res://scenes/player.tscn" id="2_ql2pw"]
+[ext_resource type="PackedScene" uid="uid://dpxyecm6s2kv1" path="res://scenes/cursor.tscn" id="3_b5271"]
+[ext_resource type="AudioStream" uid="uid://dy7n3xsiud4yq" path="res://sounds/explosion_1.wav" id="6_jvlwf"]
+[ext_resource type="PackedScene" uid="uid://csrwcttxly05w" path="res://scenes/ship_cursor.tscn" id="6_t74q6"]
+[ext_resource type="PackedScene" uid="uid://bci0fkk2sypoe" path="res://scenes/hud.tscn" id="6_tbi74"]
+[ext_resource type="AudioStream" uid="uid://bec1gx6abfjbo" path="res://sounds/water_splash.wav" id="7_72wb4"]
+[ext_resource type="AudioStream" uid="uid://rvf4ij2vbcc8" path="res://sounds/missile_launch.wav" id="7_406b8"]
+[ext_resource type="AudioStream" uid="uid://be8wnmh0o05ky" path="res://sounds/good_beep.wav" id="7_gwo6n"]
+[ext_resource type="AudioStream" uid="uid://rw8a7aaehsc" path="res://sounds/bad_beep.wav" id="8_gjgbd"]
+
+[node name="Main" type="Node" node_paths=PackedStringArray("player_1", "player_2", "HUD")]
+script = ExtResource("1_kim6n")
+ship_cursor_scene = ExtResource("6_t74q6")
+player_1 = NodePath("Player1")
+player_2 = NodePath("Player2")
+HUD = NodePath("HUD")
+
+[node name="Player1" parent="." node_paths=PackedStringArray("enemy", "attack_cursor") instance=ExtResource("2_ql2pw")]
+unique_name_in_owner = true
+enemy = NodePath("../Player2")
+attack_cursor = NodePath("ReferenceRect/Cursor1")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Player1"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 53.0
+offset_right = 576.0
+offset_bottom = 572.0
+
+[node name="Cursor1" parent="Player1/ReferenceRect" instance=ExtResource("3_b5271")]
+scale = Vector2(1.625, 1.625)
+
+[node name="Player2" parent="." node_paths=PackedStringArray("enemy", "attack_cursor") instance=ExtResource("2_ql2pw")]
+unique_name_in_owner = true
+enemy = NodePath("../Player1")
+attack_cursor = NodePath("ReferenceRect/Cursor2")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Player2"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 53.0
+offset_right = 576.0
+offset_bottom = 572.0
+
+[node name="Cursor2" parent="Player2/ReferenceRect" instance=ExtResource("3_b5271")]
+scale = Vector2(1.625, 1.625)
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Explosion" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("6_jvlwf")
+
+[node name="MissileLaunch" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("7_406b8")
+
+[node name="UIAccepted" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("7_gwo6n")
+
+[node name="UIDenied" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("8_gjgbd")
+
+[node name="Missed" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("7_72wb4")
+
+[node name="ShipCursorHolder" type="Marker2D" parent="."]
+position = Vector2(629, 129)
+
+[node name="HUD" parent="." instance=ExtResource("6_tbi74")]
+
+[connection signal="bombed_objective" from="Player1" to="." method="_on_player_bombed_objective"]
+[connection signal="missed_objective" from="Player1" to="." method="_on_player_missed_objective"]
+[connection signal="bombed_objective" from="Player2" to="." method="_on_player_bombed_objective"]
+[connection signal="missed_objective" from="Player2" to="." method="_on_player_missed_objective"]

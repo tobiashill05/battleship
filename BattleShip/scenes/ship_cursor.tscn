@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://csrwcttxly05w"]
+
+[ext_resource type="PackedScene" uid="uid://dpxyecm6s2kv1" path="res://scenes/cursor.tscn" id="1_h5fhf"]
+[ext_resource type="Script" path="res://scripts/ship_cursor.gd" id="3_1oi3x"]
+[ext_resource type="Texture2D" uid="uid://c84e6auga3jt3" path="res://assets/metalic_panel.png" id="3_d6h0i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8t5wg"]
+atlas = ExtResource("3_d6h0i")
+
+[node name="Cursor" instance=ExtResource("1_h5fhf")]
+script = ExtResource("3_1oi3x")
+
+[node name="Sprite2D" parent="." index="0"]
+modulate = Color(1, 1, 1, 0.509804)
+position = Vector2(0, 0)
+scale = Vector2(1.625, 1.625)
+texture = SubResource("AtlasTexture_8t5wg")
+centered = false
+region_enabled = false
+region_rect = Rect2(0, 0, 32, 64)
+metadata/_edit_lock_ = true
